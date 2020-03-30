@@ -1,0 +1,2 @@
+# Ignore files that are using the new TS 3.8 syntax that ESLint doesn't support yet
+/src/overmind/index.ts

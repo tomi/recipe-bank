@@ -1,0 +1,1 @@
+export { AddNewRecipeView } from './AddNewRecipeView';

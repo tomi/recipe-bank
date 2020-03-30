@@ -1,14 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import * as React from 'react';
+import { render } from 'react-dom';
+import { createOvermind } from 'overmind';
+import { Provider } from 'overmind-react';
 
-ReactDOM.render(
+import './assets/main.css';
+import { App } from './app/App';
+import * as serviceWorker from './serviceWorker';
+import { config } from './overmind';
+
+const overmind = createOvermind(config);
+
+render(
   <React.StrictMode>
-    <App />
+    <Provider value={overmind}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
