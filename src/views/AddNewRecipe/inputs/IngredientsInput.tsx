@@ -10,10 +10,10 @@ import {
   Dialog,
   Autocomplete,
 } from 'evergreen-ui';
+import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 
 import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
-import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 import { ParseIngredientsForm } from '../ParseIngredientsForm';
 import { ParseResult } from '../../../overmind/recipes/IngredientParser';
 
@@ -116,6 +116,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
           ))}
 
           <button
+            type="button"
             className="border-dashed border-gray-500 border-2 p-2 hover:border-gray-800 active:border-gray-500 w-full"
             onClick={() => fields.push({ qty: '', unit: '', name: '' })}
           >
@@ -134,6 +135,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
               }
 
               const parseResult = maybeParseResult.value;
+              // eslint-disable-next-line no-plusplus
               for (let i = 0; i < parseResult.ingredients.length; i++) {
                 const result = parseResult.ingredients[i];
                 const newIngredient = {

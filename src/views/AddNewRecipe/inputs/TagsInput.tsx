@@ -10,7 +10,7 @@ export const TagsInput: React.FC<TagsInputProps> = () => {
   return (
     <StyledField label="Tags" labelFor="tags">
       <Field name="tags">
-        {({ input }) => <TagInput name="tags" className="w-full" />}
+        {() => <TagInput name="tags" className="w-full" />}
       </Field>
     </StyledField>
   );

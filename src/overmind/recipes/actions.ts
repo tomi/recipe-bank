@@ -1,5 +1,5 @@
 import { from } from 'fromfrom';
-import { AsyncAction } from '../';
+import { AsyncAction } from '..';
 
 export const fetchRecipeCategories: AsyncAction = async ({
   effects,

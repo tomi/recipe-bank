@@ -1,4 +1,5 @@
 import 'jest';
+
 import { parseIngredients } from './IngredientParser';
 
 describe('IngredientParser', () => {

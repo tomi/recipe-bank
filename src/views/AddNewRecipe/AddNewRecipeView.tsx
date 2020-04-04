@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
+import { IconButton } from 'evergreen-ui';
+import { useHistory } from 'react-router-dom';
 
 import { CookingDuration, RecipeCategory } from '../../overmind/recipes/models';
 import { AppLayout, Title } from '../../app/AppLayout';
-import { IconButton } from 'evergreen-ui';
-import { useHistory } from 'react-router-dom';
 import { NameInput, validateName } from './inputs/NameInput';
 import { DurationInput } from './inputs/DurationInput';
 import {

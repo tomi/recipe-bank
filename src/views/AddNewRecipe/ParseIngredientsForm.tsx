@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { Textarea } from 'evergreen-ui';
+
 import {
   parseIngredients,
   ParseResult,
   ParsedIngredient,
 } from '../../overmind/recipes/IngredientParser';
-import { Textarea } from 'evergreen-ui';
 import { StyledField } from './inputs/StyledField';
 
 interface ParseIngredientsFormProps {

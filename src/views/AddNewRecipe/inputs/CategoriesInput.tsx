@@ -36,7 +36,7 @@ export const CategoriesInput: React.FC<CategoriesInputProps> = () => {
     >
       <div className="flex flex-wrap">
         {recipes.recipeCategoryList.map((c) => (
-          <Field key={c.id} name={`categories`} value={c.id} type="checkbox">
+          <Field key={c.id} name="categories" value={c.id} type="checkbox">
             {({ input }) => (
               <Checkbox
                 key={c.id}

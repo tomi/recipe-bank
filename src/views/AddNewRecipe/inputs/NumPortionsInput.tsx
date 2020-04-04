@@ -9,9 +9,11 @@ export const validateNumPortions = (value?: string) => {
   if (!value) {
     return 'Number of portions is required';
   }
-  if (isNaN(parseInt(value, 10))) {
+  if (Number.isNaN(parseInt(value, 10))) {
     return 'Number of portions must be a number';
   }
+
+  return undefined;
 };
 
 export const NumPortionsInput: React.FC<NumPortionsInputProps> = () => {

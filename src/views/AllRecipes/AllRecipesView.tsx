@@ -26,7 +26,7 @@ export const AllRecipesView: React.FC = () => {
           </div>
 
           <div>
-            <RecipeTable></RecipeTable>
+            <RecipeTable />
           </div>
         </div>
       </AppLayout.Content>

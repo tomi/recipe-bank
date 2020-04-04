@@ -15,7 +15,6 @@ const Header: React.FC<PageHeaderProps> = ({ children }) => {
 export const Title: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   className,
-  ...rest
 }) => {
   return <div className={`font-sans text-2xl ${className}`}>{children}</div>;
 };
@@ -35,8 +34,6 @@ const Layout: React.FC = ({ children }) => {
 };
 
 export const AppLayout = Object.assign(Layout, {
-  Header: Header,
-  Content: Content,
+  Header,
+  Content,
 });
-
-// export { AppLayout };

@@ -1,12 +1,32 @@
+import { from } from 'fromfrom';
+
 import { ingredientTypes, recipeCategories, ingredients } from './seeds';
 import { IngredientType, RecipeCategory, Ingredient } from './models';
-import { from } from 'fromfrom';
 
 enum LocalStorageKey {
   RecipeCategories = 'recipeCategories',
   IngredientTypes = 'ingredientTypes',
   Ingredients = 'ingredients',
 }
+
+const getNextId = (items: { id: string }[]) =>
+  (
+    from(items)
+      .map((item) => parseInt(item.id, 10))
+      .reduce(Math.max, 0) + 1
+  ).toString();
+
+const deserializeFromLocalStorage = <T>(key: string): T | null => {
+  const value = window.localStorage.getItem(key);
+
+  return value ? JSON.parse(value) : null;
+};
+
+const serializeToLocalStorage = (key: string, value: any) => {
+  const serialized = JSON.stringify(value);
+
+  window.localStorage.setItem(key, serialized);
+};
 
 export const api = {
   async seed() {
@@ -59,23 +79,4 @@ export const api = {
       newIngredientType,
     ]);
   },
-};
-
-const getNextId = (items: { id: string }[]) =>
-  (
-    from(items)
-      .map((item) => parseInt(item.id, 10))
-      .reduce(Math.max, 0) + 1
-  ).toString();
-
-const deserializeFromLocalStorage = <T>(key: string): T | null => {
-  const value = window.localStorage.getItem(key);
-
-  return value ? JSON.parse(value) : null;
-};
-
-const serializeToLocalStorage = (key: string, value: any) => {
-  const serialized = JSON.stringify(value);
-
-  window.localStorage.setItem(key, serialized);
 };

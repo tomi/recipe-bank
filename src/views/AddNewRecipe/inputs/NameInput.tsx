@@ -9,6 +9,8 @@ export const validateName = (value?: string) => {
   if (!value) {
     return 'Name is required';
   }
+
+  return undefined;
 };
 
 export const NameInput: React.FC<NameInputProps> = () => {

@@ -17,10 +17,14 @@ export const RecipeTable: React.FC<RecipeTableProps> = () => {
       </Table.Head>
       <Table.Body height={240}>
         {state.recipes.recipeList.map((r) => (
-          <Table.Row key={r.id} isSelectable onSelect={() => alert(r.name)}>
+          <Table.Row
+            key={r.id}
+            isSelectable
+            onSelect={() => console.log(r.name)}
+          >
             <Table.TextCell>{r.name}</Table.TextCell>
             <Table.TextCell>{formatDuration(r.duration)}</Table.TextCell>
-            <Table.TextCell isNumber></Table.TextCell>
+            <Table.TextCell isNumber />
           </Table.Row>
         ))}
       </Table.Body>
