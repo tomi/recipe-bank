@@ -3,7 +3,7 @@ import { Field } from 'react-final-form';
 import { TextInput } from 'evergreen-ui';
 import { StyledField } from './StyledField';
 
-export interface INumPortionsInputProps {}
+export interface NumPortionsInputProps {}
 
 export const validateNumPortions = (value?: string) => {
   if (!value) {
@@ -14,7 +14,7 @@ export const validateNumPortions = (value?: string) => {
   }
 };
 
-export const NumPortionsInput: React.FC<INumPortionsInputProps> = () => {
+export const NumPortionsInput: React.FC<NumPortionsInputProps> = () => {
   return (
     <Field name="numPortions">
       {({ input, meta }) => (

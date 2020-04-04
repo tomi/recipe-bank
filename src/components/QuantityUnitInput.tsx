@@ -3,7 +3,7 @@ import { Combobox, TextInput } from 'evergreen-ui';
 
 import './QuantityUnitInput.css';
 
-export interface IQuantityUnitInputProps {
+export interface QuantityUnitInputProps {
   qty: string;
   unit: string;
   validUnits: string[];
@@ -11,7 +11,7 @@ export interface IQuantityUnitInputProps {
   onUnitChange: (value: string) => void;
 }
 
-export const QuantityUnitInput: React.FC<IQuantityUnitInputProps> = ({
+export const QuantityUnitInput: React.FC<QuantityUnitInputProps> = ({
   qty,
   unit,
   validUnits,

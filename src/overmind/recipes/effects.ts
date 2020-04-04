@@ -1,5 +1,5 @@
 import { ingredientTypes, recipeCategories, ingredients } from './seeds';
-import { IIngredientType, IRecipeCategory, IIngredient } from './models';
+import { IngredientType, RecipeCategory, Ingredient } from './models';
 import { from } from 'fromfrom';
 
 enum LocalStorageKey {
@@ -23,7 +23,7 @@ export const api = {
   },
 
   async fetchRecipeCategories() {
-    const values = deserializeFromLocalStorage<IRecipeCategory[]>(
+    const values = deserializeFromLocalStorage<RecipeCategory[]>(
       LocalStorageKey.RecipeCategories,
     );
 
@@ -31,7 +31,7 @@ export const api = {
   },
 
   async fetchIngredientTypes() {
-    const values = deserializeFromLocalStorage<IIngredientType[]>(
+    const values = deserializeFromLocalStorage<IngredientType[]>(
       LocalStorageKey.IngredientTypes,
     );
 
@@ -39,14 +39,14 @@ export const api = {
   },
 
   async fetchIngredients() {
-    const values = deserializeFromLocalStorage<IIngredient[]>(
+    const values = deserializeFromLocalStorage<Ingredient[]>(
       LocalStorageKey.Ingredients,
     );
 
     return values ?? [];
   },
 
-  async createIngredientType(ingredientType: Omit<IIngredientType, 'id'>) {
+  async createIngredientType(ingredientType: Omit<IngredientType, 'id'>) {
     const existing = await this.fetchIngredientTypes();
 
     const newIngredientType = {

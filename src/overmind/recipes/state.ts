@@ -1,29 +1,24 @@
 import { from } from 'fromfrom';
 import { derived } from 'overmind';
-import {
-  IIngredientType,
-  IIngredient,
-  IRecipe,
-  IRecipeCategory,
-} from './models';
+import { IngredientType, Ingredient, Recipe, RecipeCategory } from './models';
 
 type EntityContainer<TEntity> = {
   [id: string]: TEntity;
 };
 
-type IngredientTypes = EntityContainer<IIngredientType>;
-type Ingredients = EntityContainer<IIngredient>;
-type Recipes = EntityContainer<IRecipe>;
-type RecipeCategories = EntityContainer<IRecipeCategory>;
+type IngredientTypes = EntityContainer<IngredientType>;
+type Ingredients = EntityContainer<Ingredient>;
+type Recipes = EntityContainer<Recipe>;
+type RecipeCategories = EntityContainer<RecipeCategory>;
 
 type State = {
   ingredientTypes: IngredientTypes;
   ingredients: Ingredients;
-  ingredientsList: IIngredient[];
+  ingredientsList: Ingredient[];
   recipes: Recipes;
-  recipeList: IRecipe[];
+  recipeList: Recipe[];
   recipeCategories: RecipeCategories;
-  recipeCategoryList: IRecipeCategory[];
+  recipeCategoryList: RecipeCategory[];
 };
 
 export const state: State = {
@@ -31,13 +26,11 @@ export const state: State = {
   ingredients: {},
   recipes: {},
   recipeCategories: {},
-  ingredientsList: derived<State, IIngredient[]>((state) =>
+  ingredientsList: derived<State, Ingredient[]>((state) =>
     Object.values(state.ingredients),
   ),
-  recipeList: derived<State, IRecipe[]>((state) =>
-    Object.values(state.recipes),
-  ),
-  recipeCategoryList: derived<State, IRecipeCategory[]>((state) =>
+  recipeList: derived<State, Recipe[]>((state) => Object.values(state.recipes)),
+  recipeCategoryList: derived<State, RecipeCategory[]>((state) =>
     from(state.recipeCategories)
       .map((pair) => pair[1])
       .sortBy((x) => x.name)

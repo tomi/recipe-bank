@@ -34,10 +34,10 @@ export interface Derive<Parent extends IState, Output>
 export const useOvermind = createHook<typeof config>();
 
 export type {
-  IIngredient,
-  IIngredientType,
-  IRecipe,
-  IRecipeIngredient,
+  Ingredient,
+  IngredientType,
+  Recipe,
+  RecipeIngredient,
   IngredientId,
   IngredientTypeId,
   RecipeId,

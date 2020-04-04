@@ -2,10 +2,7 @@ import * as React from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import {
-  CookingDuration,
-  IRecipeCategory,
-} from '../../overmind/recipes/models';
+import { CookingDuration, RecipeCategory } from '../../overmind/recipes/models';
 import { AppLayout, Title } from '../../app/AppLayout';
 import { IconButton } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
@@ -27,22 +24,22 @@ import {
 export interface AddNewRecipeViewProps {}
 
 export interface RecipeCategoriesSelectProps {
-  categories: IRecipeCategory[];
+  categories: RecipeCategory[];
 }
 
-interface IIngredientData {
+interface IngredientData {
   quantity?: string;
   unit?: string;
   value?: string;
 }
 
-interface IFormData {
+interface FormData {
   name?: string;
   numPortions?: string;
   duration?: CookingDuration;
   categories?: CategoryCheckedState[];
   tags?: string[];
-  ingredients?: IIngredientData[];
+  ingredients?: IngredientData[];
   instructions?: string;
 }
 
@@ -55,7 +52,7 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
     console.log('Success:', values);
   };
 
-  const validate = (values: IFormData) => {
+  const validate = (values: FormData) => {
     console.log('Validating', values);
 
     return {
@@ -75,7 +72,7 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
         <Title className="ml-4">Add new recipe</Title>
       </AppLayout.Header>
       <AppLayout.Content>
-        <Form<IFormData>
+        <Form<FormData>
           onSubmit={onFinish}
           validate={validate}
           mutators={{ ...arrayMutators }}

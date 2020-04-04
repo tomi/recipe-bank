@@ -3,7 +3,7 @@ import { Field } from 'react-final-form';
 import { TextInput } from 'evergreen-ui';
 import { StyledField } from './StyledField';
 
-export interface INameInputProps {}
+export interface NameInputProps {}
 
 export const validateName = (value?: string) => {
   if (!value) {
@@ -11,7 +11,7 @@ export const validateName = (value?: string) => {
   }
 };
 
-export const NameInput: React.FC<INameInputProps> = () => {
+export const NameInput: React.FC<NameInputProps> = () => {
   return (
     <Field name="name">
       {({ input, meta }) => (

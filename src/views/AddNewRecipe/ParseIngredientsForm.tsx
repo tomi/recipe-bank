@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {
   parseIngredients,
-  IParseResult,
-  IParsedIngredient,
+  ParseResult,
+  ParsedIngredient,
 } from '../../overmind/recipes/IngredientParser';
 import { Textarea } from 'evergreen-ui';
 import { StyledField } from './inputs/StyledField';
 
-interface IParseIngredientsFormProps {
-  onIngredientsParsed: (result: IParseResult) => void;
+interface ParseIngredientsFormProps {
+  onIngredientsParsed: (result: ParseResult) => void;
 }
 
 const ParsedPart: React.FC = ({ children }) => {
@@ -18,12 +18,10 @@ const ParsedPart: React.FC = ({ children }) => {
 };
 
 export interface ParsedIngredientProps {
-  ingredient: IParsedIngredient;
+  ingredient: ParsedIngredient;
 }
 
-export const ParsedIngredient: React.FC<ParsedIngredientProps> = ({
-  ingredient,
-}) => {
+const Ingredient: React.FC<ParsedIngredientProps> = ({ ingredient }) => {
   return (
     <div className="flex">
       {ingredient.quantity && <ParsedPart>{ingredient.quantity}</ParsedPart>}
@@ -33,13 +31,13 @@ export const ParsedIngredient: React.FC<ParsedIngredientProps> = ({
   );
 };
 
-export const ParseIngredientsForm: React.FC<IParseIngredientsFormProps> = ({
+export const ParseIngredientsForm: React.FC<ParseIngredientsFormProps> = ({
   onIngredientsParsed,
 }) => {
   const [
     parsedIngredients,
     setParsedIngredients,
-  ] = React.useState<IParseResult | null>(null);
+  ] = React.useState<ParseResult | null>(null);
 
   const onInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     console.log('ONCHANGE');
@@ -60,7 +58,7 @@ export const ParseIngredientsForm: React.FC<IParseIngredientsFormProps> = ({
       <StyledField label="Parse result">
         {parsedIngredients
           ? parsedIngredients.ingredients.map((i) => (
-              <ParsedIngredient ingredient={i} />
+              <Ingredient ingredient={i} />
             ))
           : null}
       </StyledField>

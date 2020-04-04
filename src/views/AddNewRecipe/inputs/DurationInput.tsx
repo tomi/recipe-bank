@@ -5,9 +5,9 @@ import { CookingDuration } from '../../../overmind/recipes/models';
 import { formatDuration } from '../../../ui/formatters';
 import { StyledField } from './StyledField';
 
-export interface IDurationInputProps {}
+export interface DurationInputProps {}
 
-export const DurationInput: React.FC<IDurationInputProps> = () => {
+export const DurationInput: React.FC<DurationInputProps> = () => {
   return (
     <Field name="duration">
       {({ input }) => (

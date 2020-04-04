@@ -1,22 +1,22 @@
 import { from, Sequence } from 'fromfrom';
 import { some, none, isSome } from 'fp-ts/lib/Option';
 
-export interface IParsedIngredient {
+export interface ParsedIngredient {
   name: string;
   modifier?: string;
   quantity?: number;
   unit?: string;
 }
 
-export interface IParseResult {
-  ingredients: IParsedIngredient[];
+export interface ParseResult {
+  ingredients: ParsedIngredient[];
 }
 
 /**
  * Parses ingredients from the given (multi-line) text
  */
-export const parseIngredients = (text: string): IParseResult => {
-  const ingredients: IParsedIngredient[] = splitToLines(text)
+export const parseIngredients = (text: string): ParseResult => {
+  const ingredients: ParsedIngredient[] = splitToLines(text)
     .map(parseSingleLine)
     .toArray();
 
@@ -108,7 +108,7 @@ const parsedIngredient = ({
   modifier,
   quantity,
   unit,
-}: IParsedIngredient): IParsedIngredient => ({
+}: ParsedIngredient): ParsedIngredient => ({
   name,
   ...(modifier && { modifier }),
   ...(quantity && { quantity }),

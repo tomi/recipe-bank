@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './AppLayout.css';
 
-export interface IAppLayoutProps {
+export interface AppLayoutProps {
   title: string;
 }
 

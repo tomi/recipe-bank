@@ -15,7 +15,7 @@ import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
 import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 import { ParseIngredientsForm } from '../ParseIngredientsForm';
-import { IParseResult } from '../../../overmind/recipes/IngredientParser';
+import { ParseResult } from '../../../overmind/recipes/IngredientParser';
 
 export interface IngredientsInputProps {}
 
@@ -81,7 +81,7 @@ const QuantityUnitInput: React.FC<QuantityUnitInputProps> = ({ name }) => (
 export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
   const [isDialogShown, setIsDialogShown] = React.useState(false);
   const [maybeParseResult, setParseResult] = React.useState<
-    Option<IParseResult>
+    Option<ParseResult>
   >(none);
 
   return (
@@ -149,7 +149,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
           >
             <ParseIngredientsForm
               onIngredientsParsed={
-                (maybeResult: IParseResult) => {
+                (maybeResult: ParseResult) => {
                   setParseResult(some(maybeResult));
                   // const numCurrently = fields.length ?? 0;
                   // if (i < numCurrently) {

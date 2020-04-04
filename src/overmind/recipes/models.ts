@@ -31,19 +31,19 @@ export type QuantityRange = {
 
 export type Quantity = number | QuantityRange;
 
-export interface IIngredientType {
+export interface IngredientType {
   id: IngredientTypeId;
   name: string;
 }
 
-export interface IIngredient {
+export interface Ingredient {
   id: IngredientId;
   name: string;
   type: IngredientTypeId;
   parentId?: IngredientId;
 }
 
-export interface IRecipeIngredient {
+export interface RecipeIngredient {
   id: RecipeIngredientId;
   order: number;
   ingredientId: IngredientId;
@@ -52,18 +52,18 @@ export interface IRecipeIngredient {
   unit: string;
 }
 
-export interface IRecipeCategory {
+export interface RecipeCategory {
   id: RecipeCategoryId;
   name: string;
 }
 
-export interface IRecipe {
+export interface Recipe {
   id: RecipeId;
   name: string;
   duration: CookingDuration;
   numPortions: number;
   instructions: string;
-  ingredients: IRecipeIngredient[];
+  ingredients: RecipeIngredient[];
   tags: string[];
-  categories: IRecipeCategory[];
+  categories: RecipeCategory[];
 }

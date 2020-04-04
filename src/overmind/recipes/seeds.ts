@@ -1,6 +1,6 @@
-import { IRecipeCategory, IIngredientType, IIngredient } from './models';
+import { RecipeCategory, IngredientType, Ingredient } from './models';
 
-export const ingredientTypes: IIngredientType[] = [
+export const ingredientTypes: IngredientType[] = [
   'vihannes',
   'neste',
   'mauste',
@@ -11,7 +11,7 @@ export const ingredientTypes: IIngredientType[] = [
   name,
 }));
 
-export const recipeCategories: IRecipeCategory[] = [
+export const recipeCategories: RecipeCategory[] = [
   'Starter',
   'Drinks',
   'Pizzas',
@@ -37,7 +37,7 @@ const findType = (name: string) => {
 };
 
 // prettier-ignore
-export const ingredients: IIngredient[] = [
+export const ingredients: Ingredient[] = [
   { name: 'peruna',          type: findType('vihannes') },
   { name: 'porkkana',        type: findType('vihannes') },
   { name: 'vesi',            type: findType('neste')    },
