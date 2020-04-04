@@ -46,10 +46,11 @@ export interface Ingredient {
 export interface RecipeIngredient {
   id: RecipeIngredientId;
   order: number;
-  ingredientId: IngredientId;
-  quantity: Quantity;
-  modifier: string;
-  unit: string;
+  ingredientText: string;
+  ingredientId?: IngredientId;
+  quantity?: Quantity;
+  modifier?: string;
+  unit?: string;
 }
 
 export interface RecipeCategory {
@@ -65,5 +66,23 @@ export interface Recipe {
   instructions: string;
   ingredients: RecipeIngredient[];
   tags: string[];
-  categories: RecipeCategory[];
+  categories: RecipeCategoryId[];
+}
+
+export interface CreateRecipeIngredientDto {
+  ingredientText: string;
+  ingredientId?: IngredientId;
+  quantity?: Quantity;
+  modifier?: string;
+  unit?: string;
+}
+
+export interface CreateRecipeDto {
+  name: string;
+  duration: CookingDuration;
+  numPortions: number;
+  instructions: string;
+  ingredients: CreateRecipeIngredientDto[];
+  tags: string[];
+  categories: RecipeCategoryId[];
 }

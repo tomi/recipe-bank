@@ -4,10 +4,9 @@ import { Checkbox } from 'evergreen-ui';
 
 import { StyledField } from './StyledField';
 import { useOvermind } from '../../../overmind';
+import type { RecipeCategoryId } from '../../../overmind/recipes/models';
 
-export type CategoryCheckedState = undefined | boolean;
-
-export const validateCategories = (value?: CategoryCheckedState[]) => {
+export const validateCategories = (value?: RecipeCategoryId[]) => {
   if (!value) {
     return 'Must select at least one category';
   }

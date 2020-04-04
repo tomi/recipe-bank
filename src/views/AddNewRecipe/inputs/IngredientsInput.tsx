@@ -9,6 +9,7 @@ import {
   Button,
   Dialog,
   Autocomplete,
+  FormFieldValidationMessage,
 } from 'evergreen-ui';
 import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 
@@ -16,6 +17,31 @@ import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
 import { ParseIngredientsForm } from '../ParseIngredientsForm';
 import { ParseResult } from '../../../overmind/recipes/IngredientParser';
+
+export interface IngredientData {
+  quantity?: string;
+  unit?: string;
+  name?: string;
+}
+
+export const filterEmpty = (ingredient: IngredientData) =>
+  !!ingredient.quantity || !!ingredient.unit || !!ingredient.name;
+
+const isIngredientDefined = (ingredient: IngredientData) => !!ingredient.name;
+
+export const validateIngredients = (ingredients?: IngredientData[]) => {
+  let error: string | undefined;
+
+  if (!ingredients) {
+    error = 'At least one ingredient must be defined';
+  } else if (ingredients.length < 1) {
+    error = 'At least one ingredient must be defined';
+  } else if (!ingredients.some(isIngredientDefined)) {
+    error = 'At least one ingredient must be defined';
+  }
+
+  return error ? [error] : [];
+};
 
 export interface IngredientsInputProps {}
 
@@ -78,6 +104,28 @@ const QuantityUnitInput: React.FC<QuantityUnitInputProps> = ({ name }) => (
   </div>
 );
 
+interface IngredientInputProps {
+  name: string;
+  onRemove: () => void;
+}
+
+const IngredientInput: React.FC<IngredientInputProps> = ({
+  name,
+  onRemove,
+}) => {
+  return (
+    <div key={name} className="flex flex-row w-full mb-2">
+      <QuantityUnitInput name={name} />
+
+      <Field name={`${name}.name`}>
+        {({ input }) => <TextInput className="flex-1 mx-2" {...input} />}
+      </Field>
+
+      <IconButton icon="minus" onClick={onRemove} />
+    </div>
+  );
+};
+
 export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
   const [isDialogShown, setIsDialogShown] = React.useState(false);
   const [maybeParseResult, setParseResult] = React.useState<
@@ -86,12 +134,19 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
 
   return (
     <FieldArray name="ingredients">
-      {({ fields }) => (
+      {({ fields, meta }) => (
         <div className={formFieldClassName}>
-          <div>
-            <Label>
-              Ingredients <span title="This field is required.">*</span>
-            </Label>
+          <div className="flex justify-between">
+            <div className="flex flex-col">
+              <Label>
+                Ingredients <span title="This field is required.">*</span>
+              </Label>
+              {meta.error && meta.touched && (meta.error as any).length > 0 && (
+                <FormFieldValidationMessage className="my-2">
+                  {meta.error}
+                </FormFieldValidationMessage>
+              )}
+            </div>
 
             <Button
               className="float-right"
@@ -101,18 +156,12 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
               Parse ingredients
             </Button>
           </div>
+
           {fields.map((name, index) => (
-            <div key={name} className="flex flex-row w-full mb-2">
-              <QuantityUnitInput name={name} />
-
-              <Field name={`${name}.name`}>
-                {({ input }) => (
-                  <TextInput className="flex-1 mx-2" {...input} />
-                )}
-              </Field>
-
-              <IconButton icon="minus" onClick={() => fields.remove(index)} />
-            </div>
+            <IngredientInput
+              name={name}
+              onRemove={() => fields.remove(index)}
+            />
           ))}
 
           <button
@@ -150,17 +199,9 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
             confirmLabel="Parse"
           >
             <ParseIngredientsForm
-              onIngredientsParsed={
-                (maybeResult: ParseResult) => {
-                  setParseResult(some(maybeResult));
-                  // const numCurrently = fields.length ?? 0;
-                  // if (i < numCurrently) {
-                  // } else {
-                  //   fields.push(newIngredient);
-                  // }
-                }
-                // setParsedIngredients(some(maybeResult));
-              }
+              onIngredientsParsed={(maybeResult: ParseResult) => {
+                setParseResult(some(maybeResult));
+              }}
             />
           </Dialog>
         </div>

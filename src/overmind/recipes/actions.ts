@@ -1,5 +1,6 @@
 import { from } from 'fromfrom';
 import { AsyncAction } from '..';
+import { CreateRecipeDto } from './models';
 
 export const fetchRecipeCategories: AsyncAction = async ({
   effects,
@@ -20,4 +21,17 @@ export const fetchIngredients: AsyncAction = async ({ effects, state }) => {
   const ingredients = await effects.recipes.api.fetchIngredients();
 
   state.recipes.ingredients = from(ingredients).toObject((t) => t.id);
+};
+
+export const fetchRecipes: AsyncAction = async ({ effects, state }) => {
+  const recipes = await effects.recipes.api.fetchRecipes();
+
+  state.recipes.recipes = from(recipes).toObject((t) => t.id);
+};
+
+export const createNewRecipe: AsyncAction<CreateRecipeDto> = async (
+  { effects },
+  recipe,
+) => {
+  await effects.recipes.api.createNewRecipe(recipe);
 };

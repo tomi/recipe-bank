@@ -1,12 +1,21 @@
 import { from } from 'fromfrom';
 
 import { ingredientTypes, recipeCategories, ingredients } from './seeds';
-import { IngredientType, RecipeCategory, Ingredient } from './models';
+import {
+  IngredientType,
+  RecipeCategory,
+  Ingredient,
+  CreateRecipeDto,
+  Recipe,
+  CreateRecipeIngredientDto,
+  RecipeIngredient,
+} from './models';
 
 enum LocalStorageKey {
   RecipeCategories = 'recipeCategories',
   IngredientTypes = 'ingredientTypes',
   Ingredients = 'ingredients',
+  Recipes = 'recipes',
 }
 
 const getNextId = (items: { id: string }[]) =>
@@ -66,6 +75,14 @@ export const api = {
     return values ?? [];
   },
 
+  async fetchRecipes() {
+    const values = deserializeFromLocalStorage<Recipe[]>(
+      LocalStorageKey.Recipes,
+    );
+
+    return values ?? [];
+  },
+
   async createIngredientType(ingredientType: Omit<IngredientType, 'id'>) {
     const existing = await this.fetchIngredientTypes();
 
@@ -79,4 +96,33 @@ export const api = {
       newIngredientType,
     ]);
   },
+
+  async createNewRecipe(recipe: CreateRecipeDto) {
+    const existing = await this.fetchRecipes();
+
+    const id = getNextId(existing);
+
+    const newRecipe: Recipe = {
+      id,
+      ...recipe,
+      ingredients: recipe.ingredients.map((i, idx) =>
+        createRecipeIngredient(i, idx),
+      ),
+    };
+
+    serializeToLocalStorage(LocalStorageKey.Recipes, [...existing, newRecipe]);
+
+    return id;
+  },
+};
+
+const createRecipeIngredient = (
+  recipeIngredient: CreateRecipeIngredientDto,
+  order: number,
+): RecipeIngredient => {
+  return {
+    id: getNextId([]),
+    order,
+    ...recipeIngredient,
+  };
 };
