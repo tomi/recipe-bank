@@ -1,5 +1,3 @@
-import 'jest';
-
 import { parseIngredients } from './IngredientParser';
 
 describe('IngredientParser', () => {
@@ -33,6 +31,18 @@ describe('IngredientParser', () => {
         ingredients: [
           { modifier: 'n.', quantity: 1, unit: 'l', name: 'vettä' },
         ],
+      });
+    });
+
+    it('removes possible dash in front of the ingredient', () => {
+      expect(parseIngredients('- 1l vettä')).toEqual({
+        ingredients: [{ quantity: 1, unit: 'l', name: 'vettä' }],
+      });
+    });
+
+    it('parses ½ as 0.5', () => {
+      expect(parseIngredients('½ pkt makkaraa')).toEqual({
+        ingredients: [{ quantity: 0.5, unit: 'pkt', name: 'makkaraa' }],
       });
     });
   });

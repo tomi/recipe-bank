@@ -12,11 +12,14 @@ export interface ParseResult {
   ingredients: ParsedIngredient[];
 }
 
+type LineTransform = (line: string) => string;
+
 /**
  * Parses ingredients from the given (multi-line) text
  */
 export const parseIngredients = (text: string): ParseResult => {
   const ingredients: ParsedIngredient[] = splitToLines(text)
+    .map(cleanupLine)
     .map(parseSingleLine)
     .toArray();
 
@@ -24,6 +27,15 @@ export const parseIngredients = (text: string): ParseResult => {
     ingredients,
   };
 };
+
+const compose = (...transforms: LineTransform[]) => (line: string) =>
+  transforms.reduce((l, transform) => transform(l), line);
+
+const removePossibleListMarkup = (line: string) => line.replace(/^\s*-\s*/, '');
+
+const convertHalf = (line: string) => line.replace(/½/g, '0.5');
+
+const cleanupLine = compose(removePossibleListMarkup, convertHalf);
 
 const parseSingleLine = (line: string) => {
   const words = splitToWords(line);
@@ -85,13 +97,13 @@ const trySplitOn = (
       })
     : none;
 
-const isNumeric = (word: string) => /^\d+$/.test(word);
-const isNumericWithUnit = (word: string) => /^\d+\w+$/.test(word);
+const isNumeric = (word: string) => /^\d+(\.\d+)?$/.test(word);
+const isNumericWithUnit = (word: string) => /^\d+(\.\d+)?\w+$/.test(word);
 const isProbablyUnit = (word: string | undefined) =>
   word ? word.length <= 3 && /\w+/.test(word) : false;
 const not = <T>(fn: any) => (x: T): boolean => !fn(x);
 
-const parseQty = (qty: string) => parseInt(qty, 10);
+const parseQty = (qty: string) => Number(qty);
 
 const parseQtyWithUnit = (qtyWithUnit: string) => ({
   qty: from(qtyWithUnit).takeWhile(isNumeric).toArray().join(''),
