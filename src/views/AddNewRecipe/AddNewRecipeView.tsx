@@ -30,6 +30,7 @@ import {
   validateNumPortions,
 } from './inputs/NumPortionsInput';
 import { useOvermind } from '../../overmind';
+import { parseQty } from '../../overmind/recipes/IngredientParser';
 
 export interface AddNewRecipeViewProps {}
 
@@ -121,7 +122,7 @@ const formToDto = (form: FormData): CreateRecipeDto => {
     numPortions: Number(form.numPortions),
     ingredients: form.ingredients.filter(filterEmpty).map((i) => ({
       ingredientText: i.name!,
-      quantity: i.quantity ? Number(i.quantity) : undefined,
+      quantity: i.qty ? parseQty(i.qty) : undefined,
       unit: i.unit,
     })),
   };

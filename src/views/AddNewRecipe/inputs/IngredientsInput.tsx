@@ -15,17 +15,17 @@ import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 
 import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
-import { ParseIngredientsForm } from '../ParseIngredientsForm';
+import { ParseIngredientsForm, fromQtyToString } from '../ParseIngredientsForm';
 import { ParseResult } from '../../../overmind/recipes/IngredientParser';
 
 export interface IngredientData {
-  quantity?: string;
+  qty?: string;
   unit?: string;
   name?: string;
 }
 
 export const filterEmpty = (ingredient: IngredientData) =>
-  !!ingredient.quantity || !!ingredient.unit || !!ingredient.name;
+  !!ingredient.qty || !!ingredient.unit || !!ingredient.name;
 
 const isIngredientDefined = (ingredient: IngredientData) => !!ingredient.name;
 
@@ -126,6 +126,26 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
   );
 };
 
+export interface ErrorMessageProps {
+  touched?: boolean;
+  error?: string[];
+}
+
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({
+  touched,
+  error,
+}) => {
+  if (!touched || !error || error.every((x) => !x)) {
+    return null;
+  }
+
+  return (
+    <FormFieldValidationMessage className="my-2">
+      {error}
+    </FormFieldValidationMessage>
+  );
+};
+
 export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
   const [isDialogShown, setIsDialogShown] = React.useState(false);
   const [maybeParseResult, setParseResult] = React.useState<
@@ -141,11 +161,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
               <Label>
                 Ingredients <span title="This field is required.">*</span>
               </Label>
-              {meta.error && meta.touched && (meta.error as any).length > 0 && (
-                <FormFieldValidationMessage className="my-2">
-                  {meta.error}
-                </FormFieldValidationMessage>
-              )}
+              <ErrorMessage touched={meta.touched} error={meta.error as any} />
             </div>
 
             <Button
@@ -176,6 +192,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
           <Dialog
             isShown={isDialogShown}
             title="Dialog title"
+            shouldCloseOnOverlayClick={false}
             onCloseComplete={() => {
               setIsDialogShown(false);
 
@@ -188,7 +205,9 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
               for (let i = 0; i < parseResult.ingredients.length; i++) {
                 const result = parseResult.ingredients[i];
                 const newIngredient = {
-                  qty: result.quantity,
+                  qty: result.quantity
+                    ? fromQtyToString(result.quantity)
+                    : undefined,
                   unit: result.unit,
                   name: result.name,
                 };

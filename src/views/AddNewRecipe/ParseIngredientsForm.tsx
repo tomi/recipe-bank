@@ -7,10 +7,14 @@ import {
   ParsedIngredient,
 } from '../../overmind/recipes/IngredientParser';
 import { StyledField } from './inputs/StyledField';
+import { Quantity } from '../../overmind/recipes/models';
 
 interface ParseIngredientsFormProps {
   onIngredientsParsed: (result: ParseResult) => void;
 }
+
+export const fromQtyToString = (qty: Quantity) =>
+  typeof qty === 'number' ? qty.toString() : `${qty.from}-${qty.to}`;
 
 const ParsedPart: React.FC = ({ children }) => {
   return (
@@ -25,7 +29,9 @@ export interface ParsedIngredientProps {
 const Ingredient: React.FC<ParsedIngredientProps> = ({ ingredient }) => {
   return (
     <div className="flex">
-      {ingredient.quantity && <ParsedPart>{ingredient.quantity}</ParsedPart>}
+      {ingredient.quantity && (
+        <ParsedPart>{fromQtyToString(ingredient.quantity)}</ParsedPart>
+      )}
       {ingredient.unit && <ParsedPart>{ingredient.unit}</ParsedPart>}
       <ParsedPart>{ingredient.name}</ParsedPart>
     </div>
@@ -41,14 +47,11 @@ export const ParseIngredientsForm: React.FC<ParseIngredientsFormProps> = ({
   ] = React.useState<ParseResult | null>(null);
 
   const onInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('ONCHANGE');
     const parsed = parseIngredients(event.target.value);
-    console.log(parsed);
 
     setParsedIngredients(parsed);
     onIngredientsParsed(parsed);
   };
-  console.log('render', parsedIngredients);
 
   return (
     <form>
@@ -59,7 +62,7 @@ export const ParseIngredientsForm: React.FC<ParseIngredientsFormProps> = ({
       <StyledField label="Parse result">
         {parsedIngredients
           ? parsedIngredients.ingredients.map((i) => (
-              <Ingredient ingredient={i} />
+              <Ingredient key={i.name} ingredient={i} />
             ))
           : null}
       </StyledField>

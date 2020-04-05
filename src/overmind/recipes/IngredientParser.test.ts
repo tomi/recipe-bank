@@ -14,6 +14,12 @@ describe('IngredientParser', () => {
       });
     });
 
+    it('parses ingredient without unit but with name that has known units', () => {
+      expect(parseIngredients('1 valkosipulinkynttä')).toEqual({
+        ingredients: [{ quantity: 1, name: 'valkosipulinkynttä' }],
+      });
+    });
+
     it('parses ingredient with quantity and unit', () => {
       expect(parseIngredients('250 g pinaattia')).toEqual({
         ingredients: [{ quantity: 250, unit: 'g', name: 'pinaattia' }],
@@ -43,6 +49,50 @@ describe('IngredientParser', () => {
     it('parses ½ as 0.5', () => {
       expect(parseIngredients('½ pkt makkaraa')).toEqual({
         ingredients: [{ quantity: 0.5, unit: 'pkt', name: 'makkaraa' }],
+      });
+    });
+
+    it('parses 1/2 as 0.5', () => {
+      expect(parseIngredients('1/2 pkt makkaraa')).toEqual({
+        ingredients: [{ quantity: 0.5, unit: 'pkt', name: 'makkaraa' }],
+      });
+    });
+
+    it('parses 3/4 as 0.75', () => {
+      expect(parseIngredients('3/4 tl suolaa')).toEqual({
+        ingredients: [{ quantity: 0.75, unit: 'tl', name: 'suolaa' }],
+      });
+    });
+
+    it('parses everything put together', () => {
+      expect(parseIngredients('1rklöljyä')).toEqual({
+        ingredients: [{ quantity: 1, unit: 'rkl', name: 'öljyä' }],
+      });
+    });
+
+    it('parses ingredient with double quantity', () => {
+      expect(parseIngredients('1(100 g)sipuli')).toEqual({
+        ingredients: [{ quantity: 1, name: '(100 g)sipuli' }],
+      });
+    });
+
+    it('parses quanity range', () => {
+      expect(parseIngredients('2-3 omenaa')).toEqual({
+        ingredients: [{ quantity: { from: 2, to: 3 }, name: 'omenaa' }],
+      });
+    });
+
+    it('parses quanity range with unit', () => {
+      expect(parseIngredients('1/2-1tl pippuria')).toEqual({
+        ingredients: [
+          { quantity: { from: 0.5, to: 1 }, unit: 'tl', name: 'pippuria' },
+        ],
+      });
+    });
+
+    it("does not parse units it doesn't know", () => {
+      expect(parseIngredients('1 iso sipuli')).toEqual({
+        ingredients: [{ quantity: 1, name: 'iso sipuli' }],
       });
     });
   });
