@@ -165,7 +165,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
             </div>
 
             <Button
-              className="float-right"
+              className="float-right self-end"
               appearance="minimal"
               onClick={() => setIsDialogShown(true)}
             >
@@ -175,6 +175,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
 
           {fields.map((name, index) => (
             <IngredientInput
+              key={name}
               name={name}
               onRemove={() => fields.remove(index)}
             />
