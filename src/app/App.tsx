@@ -6,9 +6,10 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { useOvermind } from '../overmind';
 import { AllRecipesView } from '../views/AllRecipes';
 import { AddNewRecipeView } from '../views/AddNewRecipe';
-import { useOvermind } from '../overmind';
+import { SingleRecipeView } from '../views/SingleRecipe';
 
 export const App: React.FC = () => {
   const { actions, effects } = useOvermind();
@@ -27,9 +28,11 @@ export const App: React.FC = () => {
         <Route path="/recipes/new">
           <AddNewRecipeView />
         </Route>
-        <Route path="/recipes">
-          <AllRecipesView />
-        </Route>
+
+        <Route path="/recipes" exact component={AllRecipesView} />
+        <Route path="/recipes/" exact component={AllRecipesView} />
+        <Route path="/recipes/:recipeId" component={SingleRecipeView} />
+
         <Route path="/">
           <Redirect to="/recipes" />
         </Route>

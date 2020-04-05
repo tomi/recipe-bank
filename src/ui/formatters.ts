@@ -1,4 +1,4 @@
-import { CookingDuration } from '../overmind/recipes/models';
+import { CookingDuration, Quantity } from '../overmind/recipes/models';
 
 export const formatDuration = (duration: CookingDuration | undefined) => {
   switch (duration) {
@@ -36,4 +36,15 @@ export const formatDuration = (duration: CookingDuration | undefined) => {
     default:
       return 'Not defined';
   }
+};
+
+export const formatQuantity = (qty?: Quantity, withWhitespace = false) => {
+  if (!qty) {
+    return '';
+  }
+  if (typeof qty === 'number') {
+    return qty.toString();
+  }
+
+  return withWhitespace ? `${qty.from} - ${qty.to}` : `${qty.from}-${qty.to}`;
 };

@@ -7,14 +7,11 @@ import {
   ParsedIngredient,
 } from '../../overmind/recipes/IngredientParser';
 import { StyledField } from './inputs/StyledField';
-import { Quantity } from '../../overmind/recipes/models';
+import { formatQuantity } from '../../ui/formatters';
 
 interface ParseIngredientsFormProps {
   onIngredientsParsed: (result: ParseResult) => void;
 }
-
-export const fromQtyToString = (qty: Quantity) =>
-  typeof qty === 'number' ? qty.toString() : `${qty.from}-${qty.to}`;
 
 const ParsedPart: React.FC = ({ children }) => {
   return (
@@ -30,7 +27,7 @@ const Ingredient: React.FC<ParsedIngredientProps> = ({ ingredient }) => {
   return (
     <div className="flex">
       {ingredient.quantity && (
-        <ParsedPart>{fromQtyToString(ingredient.quantity)}</ParsedPart>
+        <ParsedPart>{formatQuantity(ingredient.quantity)}</ParsedPart>
       )}
       {ingredient.unit && <ParsedPart>{ingredient.unit}</ParsedPart>}
       <ParsedPart>{ingredient.name}</ParsedPart>

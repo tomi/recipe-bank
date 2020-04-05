@@ -4,11 +4,13 @@ import { Table, Spinner } from 'evergreen-ui';
 import { Recipe, useOvermind } from '../../overmind';
 import { formatDuration } from '../../ui/formatters';
 import { RecipeCategories } from '../../components/RecipeCategories';
+import { useNavigation } from '../../navigation';
 
 export interface RecipeTableProps {}
 
 export const RecipeTable: React.FC<RecipeTableProps> = () => {
   const { state } = useOvermind();
+  const { navigateToRecipe } = useNavigation();
 
   return (
     <Table height="100%">
@@ -27,7 +29,7 @@ export const RecipeTable: React.FC<RecipeTableProps> = () => {
             <Table.Row
               key={r.id}
               isSelectable
-              // onSelect={() => console.log(r.name)}
+              onSelect={() => navigateToRecipe(r.id)}
             >
               <Table.TextCell>{r.name}</Table.TextCell>
               <Table.TextCell flexBasis={100} flexShrink={1} flexGrow={0}>

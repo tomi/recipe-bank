@@ -15,8 +15,9 @@ import { Option, some, none, isNone } from 'fp-ts/lib/Option';
 
 import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
-import { ParseIngredientsForm, fromQtyToString } from '../ParseIngredientsForm';
+import { ParseIngredientsForm } from '../ParseIngredientsForm';
 import { ParseResult } from '../../../overmind/recipes/IngredientParser';
+import { formatQuantity } from '../../../ui/formatters';
 
 export interface IngredientData {
   qty?: string;
@@ -207,7 +208,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
                 const result = parseResult.ingredients[i];
                 const newIngredient = {
                   qty: result.quantity
-                    ? fromQtyToString(result.quantity)
+                    ? formatQuantity(result.quantity)
                     : undefined,
                   unit: result.unit,
                   name: result.name,
