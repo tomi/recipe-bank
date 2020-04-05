@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { IconButton } from 'evergreen-ui';
+import { IconButton, Button } from 'evergreen-ui';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -107,7 +107,9 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
               <IngredientsInput />
               <InstructionsInput />
 
-              <input type="submit" />
+              <Button type="submit" appearance="primary" iconBefore="add">
+                Add
+              </Button>
             </form>
           )}
         </Form>
