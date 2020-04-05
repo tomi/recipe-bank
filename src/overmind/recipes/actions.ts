@@ -24,9 +24,15 @@ export const fetchIngredients: AsyncAction = async ({ effects, state }) => {
 };
 
 export const fetchRecipes: AsyncAction = async ({ effects, state }) => {
-  const recipes = await effects.recipes.api.fetchRecipes();
+  state.recipes.isLoadingRecipes = true;
 
-  state.recipes.recipes = from(recipes).toObject((t) => t.id);
+  try {
+    const recipes = await effects.recipes.api.fetchRecipes();
+
+    state.recipes.recipes = from(recipes).toObject((t) => t.id);
+  } finally {
+    state.recipes.isLoadingRecipes = false;
+  }
 };
 
 export const createNewRecipe: AsyncAction<CreateRecipeDto> = async (

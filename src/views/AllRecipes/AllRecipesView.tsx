@@ -4,9 +4,15 @@ import { Button } from 'evergreen-ui';
 
 import { AppLayout, Title } from '../../app/AppLayout';
 import { RecipeTable } from './RecipeTable';
+import { useOvermind } from '../../overmind';
 
 export const AllRecipesView: React.FC = () => {
   const history = useHistory();
+  const { actions } = useOvermind();
+
+  React.useEffect(() => {
+    actions.recipes.fetchRecipes();
+  }, [actions]);
 
   return (
     <AppLayout>
@@ -14,8 +20,8 @@ export const AllRecipesView: React.FC = () => {
         <Title>Recipes</Title>
       </AppLayout.Header>
       <AppLayout.Content>
-        <div className="">
-          <div className="flex mb-4 justify-end">
+        <div className="flex flex-col h-full">
+          <div className="flex mb-4 justify-end flex-initial">
             <Button
               appearance="primary"
               onClick={() => history.push('/recipes/new')}
@@ -25,7 +31,7 @@ export const AllRecipesView: React.FC = () => {
             </Button>
           </div>
 
-          <div>
+          <div className="flex-1 h-full">
             <RecipeTable />
           </div>
         </div>

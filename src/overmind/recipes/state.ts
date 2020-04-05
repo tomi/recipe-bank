@@ -19,6 +19,7 @@ type State = {
   recipeList: Recipe[];
   recipeCategories: RecipeCategories;
   recipeCategoryList: RecipeCategory[];
+  isLoadingRecipes: boolean;
 };
 
 export const state: State = {
@@ -36,4 +37,5 @@ export const state: State = {
       .sortBy((x) => x.name)
       .toArray(),
   ),
+  isLoadingRecipes: false,
 };

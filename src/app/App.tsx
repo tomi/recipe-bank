@@ -19,7 +19,6 @@ export const App: React.FC = () => {
     actions.recipes.fetchRecipeCategories();
     actions.recipes.fetchIngredientTypes();
     actions.recipes.fetchIngredients();
-    actions.recipes.fetchRecipes();
   }, [actions, effects]);
 
   return (

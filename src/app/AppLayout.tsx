@@ -21,7 +21,9 @@ export const Title: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 
 const Content: React.FC<PageContentProps> = ({ children }) => {
   return (
-    <div className="flex flex-col bg-white p-4 rounded-lg">{children}</div>
+    <div className="flex flex-col bg-white p-4 rounded-lg h-full">
+      {children}
+    </div>
   );
 };
 
