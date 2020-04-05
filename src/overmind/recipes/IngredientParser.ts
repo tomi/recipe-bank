@@ -34,8 +34,8 @@ export interface ParseResult {
 
 type LineTransform = (line: string) => string;
 
-const qtyRegExp = '\\d+(\\.\\d+)?(\\-\\d+(\\.\\d+)?)?';
-const unitRegExp = `(${knownUnits.join('|')})`;
+const qtyRegExp = '\\d+(?:\\.\\d+)?(?:\\-\\d+(?:\\.\\d+)?)?';
+const unitRegExp = `(?:${knownUnits.join('|')})`;
 
 /**
  * Parses ingredients from the given (multi-line) text
@@ -64,26 +64,24 @@ const normalizeDashes = (str: string) => str.replace(/–/, '-');
 const separateQtyAndUnit = (str: string) => {
   // In case qty, unit and name has all been written together without
   // space, separate quantity out
-  const regexp = new RegExp(`(?<before>.*?)(?<qty>${qtyRegExp})(?<rest>.*)`);
-  const matches = str.match(regexp);
-  if (!matches || !matches.groups) {
+  const regexp = new RegExp(`(.*?)(${qtyRegExp})(.*)`);
+  const matches = regexp.exec(str);
+  if (!matches) {
     return str;
   }
 
-  const before = matches.groups.before.trim();
-  const { qty } = matches.groups;
-  const rest = matches.groups.rest.trim();
-  const unitAndNameRegExp = new RegExp(
-    `^(?<unit>${unitRegExp})(?<name>.*)`,
-    'i',
-  );
+  const before = matches[1].trim();
+  const qty = matches[2];
+  const rest = matches[3].trim();
 
-  const unitMatches = rest.match(unitAndNameRegExp);
-  if (!unitMatches || !unitMatches.groups) {
+  const unitAndNameRegExp = new RegExp(`^(${unitRegExp})(.*)`, 'i');
+
+  const unitMatches = unitAndNameRegExp.exec(rest);
+  if (!unitMatches) {
     return `${before} ${qty} ${rest}`;
   }
 
-  const { unit, name } = unitMatches.groups;
+  const [, unit, name] = unitMatches;
 
   return `${before} ${qty} ${unit} ${name}`;
 };
