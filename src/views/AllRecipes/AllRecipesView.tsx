@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button } from 'evergreen-ui';
 
 import { AppLayout, Title } from '../../app/AppLayout';
 import { RecipeTable } from './RecipeTable';
 import { useOvermind } from '../../overmind';
+import { useNavigation } from '../../navigation';
 
 export const AllRecipesView: React.FC = () => {
-  const history = useHistory();
+  const { navigateToNewRecipe } = useNavigation();
   const { actions } = useOvermind();
 
   React.useEffect(() => {
@@ -24,7 +24,7 @@ export const AllRecipesView: React.FC = () => {
           <div className="flex mb-4 justify-end flex-initial">
             <Button
               appearance="primary"
-              onClick={() => history.push('/recipes/new')}
+              onClick={navigateToNewRecipe}
               iconBefore="add"
             >
               Add new recipe

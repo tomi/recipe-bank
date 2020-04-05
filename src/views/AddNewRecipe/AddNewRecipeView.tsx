@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { IconButton, Button } from 'evergreen-ui';
-import { useHistory } from 'react-router-dom';
 
 import {
   CookingDuration,
@@ -31,6 +30,7 @@ import {
 } from './inputs/NumPortionsInput';
 import { useOvermind } from '../../overmind';
 import { parseQty } from '../../overmind/recipes/IngredientParser';
+import { useNavigation } from '../../navigation';
 
 export interface AddNewRecipeViewProps {}
 
@@ -55,15 +55,15 @@ type FormValidateResult = {
 };
 
 export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
-  const history = useHistory();
   const { actions } = useOvermind();
+  const { navigateToAllRecipes } = useNavigation();
 
   const onFinish = async (values: FormData) => {
     const dto = formToDto(values);
 
     await actions.recipes.createNewRecipe(dto);
 
-    history.push('/recipes');
+    navigateToAllRecipes();
   };
 
   const validate = (values: UnvalidatedFormData): FormValidateResult => {
@@ -81,10 +81,7 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
   return (
     <AppLayout>
       <AppLayout.Header>
-        <IconButton
-          icon="arrow-left"
-          onClick={() => history.push('/recipes')}
-        />
+        <IconButton icon="arrow-left" onClick={navigateToAllRecipes} />
         <Title className="ml-4">Add new recipe</Title>
       </AppLayout.Header>
       <AppLayout.Content>
