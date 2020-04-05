@@ -26,7 +26,7 @@ export const NumPortionsInput: React.FC<NumPortionsInputProps> = () => {
           isRequired
           validationMessage={meta.error && meta.touched && meta.error}
         >
-          <TextInput id="numPortions" {...input} />
+          <TextInput id="numPortions" width="100%" maxWidth={400} {...input} />
         </StyledField>
       )}
     </Field>

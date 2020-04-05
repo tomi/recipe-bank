@@ -51,7 +51,7 @@ export interface QuantityUnitInputProps {
 
 const QuantityUnitInput: React.FC<QuantityUnitInputProps> = ({ name }) => (
   <div
-    className="flex flex-row rounded-sm quantity-unit-input"
+    className="flex flex-row rounded-sm quantity-unit-input mr-2"
     style={{
       border: '1px solid rgba(67, 90, 111, 0.3)',
     }}
@@ -114,11 +114,11 @@ const IngredientInput: React.FC<IngredientInputProps> = ({
   onRemove,
 }) => {
   return (
-    <div key={name} className="flex flex-row w-full mb-2">
+    <div key={name} className="flex flex-row w-full mb-2 flex-wrap">
       <QuantityUnitInput name={name} />
 
       <Field name={`${name}.name`}>
-        {({ input }) => <TextInput className="flex-1 mx-2" {...input} />}
+        {({ input }) => <TextInput className="flex-1 mr-2" {...input} />}
       </Field>
 
       <IconButton icon="minus" onClick={onRemove} />
@@ -169,7 +169,7 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
               appearance="minimal"
               onClick={() => setIsDialogShown(true)}
             >
-              Parse ingredients
+              Parse
             </Button>
           </div>
 

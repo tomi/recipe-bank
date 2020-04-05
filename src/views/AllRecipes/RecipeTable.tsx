@@ -14,7 +14,9 @@ export const RecipeTable: React.FC<RecipeTableProps> = () => {
     <Table height="100%">
       <Table.Head>
         <Table.TextHeaderCell>Name</Table.TextHeaderCell>
-        <Table.TextHeaderCell>Duration</Table.TextHeaderCell>
+        <Table.TextHeaderCell flexBasis={100} flexShrink={1} flexGrow={0}>
+          Duration
+        </Table.TextHeaderCell>
         <Table.TextHeaderCell>Tags</Table.TextHeaderCell>
       </Table.Head>
       <Table.Body>
@@ -28,7 +30,9 @@ export const RecipeTable: React.FC<RecipeTableProps> = () => {
               // onSelect={() => console.log(r.name)}
             >
               <Table.TextCell>{r.name}</Table.TextCell>
-              <Table.TextCell>{formatDuration(r.duration)}</Table.TextCell>
+              <Table.TextCell flexBasis={100} flexShrink={1} flexGrow={0}>
+                {formatDuration(r.duration)}
+              </Table.TextCell>
               <Table.Cell>
                 <RecipeCategories categoryIds={r.categories} />
               </Table.Cell>

@@ -18,7 +18,7 @@ export const NameInput: React.FC<NameInputProps> = () => {
           isRequired
           validationMessage={meta.error && meta.touched && meta.error}
         >
-          <TextInput id="name" {...input} />
+          <TextInput id="name" width="100%" maxWidth={400} {...input} />
         </StyledField>
       )}
     </Field>

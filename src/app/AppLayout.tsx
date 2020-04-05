@@ -29,7 +29,7 @@ const Content: React.FC<PageContentProps> = ({ children }) => {
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <div className="flex flex-col bg-gray-200 h-screen w-screen p-8">
+    <div className="flex flex-col bg-gray-200 min-h-screen w-screen p-8">
       {children}
     </div>
   );
