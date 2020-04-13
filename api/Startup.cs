@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,8 @@ namespace RecipeBankApi
 {
   public class Startup
   {
+    string allowAllCorsPolicy = "AllowAll";
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -27,7 +30,22 @@ namespace RecipeBankApi
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddControllers();
+      services.AddCors(options =>
+      {
+        options.AddPolicy(allowAllCorsPolicy, builder =>
+        {
+          builder.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+        });
+      });
+
+      services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+          options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter(allowIntegerValues: false));
+        });
 
       services.AddDbContext<RecipeContext>(options =>
         options.UseNpgsql(
@@ -44,6 +62,8 @@ namespace RecipeBankApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors(allowAllCorsPolicy);
 
       app.UseHttpsRedirection();
 

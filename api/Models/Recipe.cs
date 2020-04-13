@@ -20,10 +20,10 @@ namespace RecipeBankApi.Model
 
   public class Recipe
   {
-    public long RecipeId { get; set; }
+    public long Id { get; set; }
     [Required]
     public string Name { get; set; }
-    public CookingDuration CookingDuration { get; set; }
+    public CookingDuration Duration { get; set; }
     public int NumPortions { get; set; }
     [Required]
     public string Instructions { get; set; }

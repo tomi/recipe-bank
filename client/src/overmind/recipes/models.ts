@@ -5,16 +5,16 @@ export type RecipeIngredientId = string;
 export type RecipeCategoryId = string;
 
 export enum CookingDuration {
-  LessThan15 = 'lessThan15',
-  Between15And30 = 'between15and30',
-  Between30And60 = 'between30and60',
-  Between60to90 = 'between60to90',
-  Between90to120 = 'between90to120',
-  Between2to3hrs = 'between2to3hrs',
-  Between3to6hrs = 'between3to6hrs',
-  Between6to12hrs = 'between6to12hrs',
-  Between12to24hrs = 'between12to24hrs',
-  Over24hrs = 'over24hrs',
+  LessThan15 = 'LessThan15',
+  Between15And30 = 'Between15And30',
+  Between30And60 = 'Between30And60',
+  Between60to90 = 'Between60to90',
+  Between90to120 = 'Between90to120',
+  Between2to3hrs = 'Between2to3hrs',
+  Between3to6hrs = 'Between3to6hrs',
+  Between6to12hrs = 'Between6to12hrs',
+  Between12to24hrs = 'Between12to24hrs',
+  Over24hrs = 'Over24hrs',
 }
 
 export enum Unit {

@@ -6,10 +6,8 @@ import {
   RecipeCategory,
   Ingredient,
   CreateRecipeDto,
-  Recipe,
-  CreateRecipeIngredientDto,
-  RecipeIngredient,
 } from './models';
+import { listAllRecipes, createNewRecipe } from '../../api/recipeApi';
 
 enum LocalStorageKey {
   RecipeCategories = 'recipeCategories',
@@ -76,11 +74,9 @@ export const api = {
   },
 
   async fetchRecipes() {
-    const values = deserializeFromLocalStorage<Recipe[]>(
-      LocalStorageKey.Recipes,
-    );
+    const recipes = await listAllRecipes();
 
-    return values ?? [];
+    return recipes;
   },
 
   async createIngredientType(ingredientType: Omit<IngredientType, 'id'>) {
@@ -98,31 +94,8 @@ export const api = {
   },
 
   async createNewRecipe(recipe: CreateRecipeDto) {
-    const existing = await this.fetchRecipes();
+    const newRecipe = await createNewRecipe(recipe);
 
-    const id = getNextId(existing);
-
-    const newRecipe: Recipe = {
-      id,
-      ...recipe,
-      ingredients: recipe.ingredients.map((i, idx) =>
-        createRecipeIngredient(i, idx),
-      ),
-    };
-
-    serializeToLocalStorage(LocalStorageKey.Recipes, [...existing, newRecipe]);
-
-    return id;
+    return newRecipe.id;
   },
-};
-
-const createRecipeIngredient = (
-  recipeIngredient: CreateRecipeIngredientDto,
-  order: number,
-): RecipeIngredient => {
-  return {
-    id: getNextId([]),
-    order,
-    ...recipeIngredient,
-  };
 };

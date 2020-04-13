@@ -50,7 +50,7 @@ namespace RecipeBankApi.Controllers
     {
       var recipe = new Recipe()
       {
-        CookingDuration = toCreate.CookingDuration,
+        Duration = toCreate.Duration,
         Instructions = toCreate.Instructions,
         Name = toCreate.Name,
         NumPortions = toCreate.NumPortions,
@@ -61,7 +61,8 @@ namespace RecipeBankApi.Controllers
           IngredientText = dto.IngredientText,
           Modifier = dto.Modifier,
           Order = dto.Order,
-          Quantity = dto.Quantity,
+          MinQuantity = dto.MinQuantity,
+          MaxQuantity = dto.MaxQuantity,
           IngredientId = dto.IngredientId,
           Unit = dto.Unit
         }).ToList()
@@ -71,7 +72,7 @@ namespace RecipeBankApi.Controllers
 
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(GetRecipe), new { id = recipe.RecipeId }, recipe);
+      return CreatedAtAction(nameof(GetRecipe), new { id = recipe.Id }, recipe);
     }
   }
 }

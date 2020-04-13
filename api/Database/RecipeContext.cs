@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using RecipeBankApi.Model;
@@ -17,6 +18,13 @@ namespace RecipeBankApi.Data
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Recipe>().ToTable("Recipe");
+      modelBuilder.Entity<Recipe>()
+        .Property(e => e.Duration)
+        .HasConversion(
+          v => v,
+          v => (CookingDuration)v
+        );
+
       modelBuilder.Entity<RecipeIngredient>().ToTable("RecipeIngredient");
     }
   }

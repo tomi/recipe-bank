@@ -7,7 +7,8 @@ namespace RecipeBankApi.Model
     public int Order { get; set; }
     public string IngredientText { get; set; }
     public long? IngredientId { get; set; }
-    public decimal? Quantity { get; set; }
+    public decimal? MinQuantity { get; set; }
+    public decimal? MaxQuantity { get; set; }
     public string Modifier { get; set; }
     public string Unit { get; set; }
   }
@@ -17,12 +18,14 @@ namespace RecipeBankApi.Model
   {
     [Required]
     public string Name { get; set; }
-    public CookingDuration CookingDuration { get; set; }
+    [Required]
+    public CookingDuration Duration { get; set; }
     [Required]
     public int NumPortions { get; set; }
     [Required]
     public string Instructions { get; set; }
     public string Tags { get; set; }
+    [Required]
     public string[] Categories { get; set; }
     public CreateRecipeIngredientDto[] Ingredients { get; set; }
   }

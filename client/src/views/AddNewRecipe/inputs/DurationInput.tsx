@@ -5,6 +5,10 @@ import { CookingDuration } from '../../../overmind/recipes/models';
 import { formatDuration } from '../../../ui/formatters';
 import { StyledField } from './StyledField';
 
+const durations = Object.values(CookingDuration).map<CookingDuration>(
+  (v) => v as CookingDuration,
+);
+
 export interface DurationInputProps {}
 
 export const DurationInput: React.FC<DurationInputProps> = () => {
@@ -17,9 +21,9 @@ export const DurationInput: React.FC<DurationInputProps> = () => {
             width="100%"
             height={24}
             {...input}
-            options={Object.values(CookingDuration).map((v) => ({
-              label: formatDuration(v),
-              value: v,
+            options={durations.map((duration) => ({
+              label: formatDuration(duration),
+              value: duration,
             }))}
           />
         </StyledField>
