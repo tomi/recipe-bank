@@ -3,6 +3,7 @@ Client:
 - Order ingredient in create recipe view
 - Subheaders within ingredients
 - API error handling
+- Spinner to recipe creation
 
 API:
 
