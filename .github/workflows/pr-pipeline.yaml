@@ -50,4 +50,4 @@ jobs:
       - name: dotnet build
         run: |
           dotnet build --configuration Release
-        working-directory: ./Api
+        working-directory: ./api
