@@ -51,11 +51,11 @@ jobs:
         run: |
           dotnet build --configuration Release
           dotnet publish -c Release -o 'publish'
-        working-directory: ./Api
+        working-directory: ./api
 
       - name: Deploy the API
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.azureWebAppName }}
           publish-profile: ${{ secrets.azureWebAppPublishProfile }}
-          package: ./Api/publish
+          package: ./api/publish
