@@ -1,0 +1,61 @@
+name: Build, run tests and deploy
+on:
+  push:
+    branches:
+      - master
+
+env:
+  DOTNET_VERSION: "3.1.201"
+
+jobs:
+  build-client:
+    name: Run build, tests and lint for client
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    env:
+      CI: TRUE
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: NPM install
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: ./client
+
+      - name: Lint, test & build
+        run: |
+          npm run lint
+          npm test
+          npm run build
+        working-directory: ./client
+
+  build-and-deply-api:
+    name: Build and deploy API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: dotnet build and publish
+        run: |
+          dotnet build --configuration Release
+          dotnet publish -c Release -o 'publish'
+        working-directory: ./Api
+
+      - name: Deploy the API
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.azureWebAppName }}
+          publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+          package: ./Api/publish
