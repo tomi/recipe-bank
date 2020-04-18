@@ -18,9 +18,31 @@ export const InstructionsInput: React.FC<InstructionsInputProps> = () => {
           isRequired
           validationMessage={meta.error && meta.touched && meta.error}
         >
-          <Textarea className="h-64" {...input} />
+          <Textarea
+            className="h-64"
+            onPaste={(event: React.ClipboardEvent<HTMLTextAreaElement>) => {
+              const { clipboardData } = event;
+              if (event.currentTarget.value) {
+                return;
+              }
+
+              event.stopPropagation();
+              event.preventDefault();
+
+              const text = trimPastedText(clipboardData.getData('Text'));
+              input.onChange(text);
+            }}
+            {...input}
+          />
         </StyledField>
       )}
     </Field>
   );
 };
+
+const trimPastedText = (text: string) =>
+  text
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => !!l)
+    .join('\n');
