@@ -20,6 +20,7 @@ type State = {
   recipeCategories: RecipeCategories;
   recipeCategoryList: RecipeCategory[];
   isLoadingRecipes: boolean;
+  isSavingRecipe: boolean;
 };
 
 export const state: State = {
@@ -38,4 +39,5 @@ export const state: State = {
       .toArray(),
   ),
   isLoadingRecipes: false,
+  isSavingRecipe: false,
 };

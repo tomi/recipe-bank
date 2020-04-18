@@ -5,6 +5,7 @@ namespace RecipeBankApi.Model
   public class CreateRecipeIngredientDto
   {
     public int Order { get; set; }
+    [Required]
     public string IngredientText { get; set; }
     public long? IngredientId { get; set; }
     public decimal? MinQuantity { get; set; }
@@ -27,6 +28,7 @@ namespace RecipeBankApi.Model
     public string Tags { get; set; }
     [Required]
     public string[] Categories { get; set; }
+    [Required]
     public CreateRecipeIngredientDto[] Ingredients { get; set; }
   }
 }

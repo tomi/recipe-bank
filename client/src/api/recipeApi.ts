@@ -1,37 +1,38 @@
+import { EitherAsync } from 'purify-ts/EitherAsync';
+
 import { Recipe } from '../overmind';
 import { CreateRecipeDto, Quantity } from '../overmind/recipes/models';
+import { RequestError, fetch } from './api';
 
 const API_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:5000';
 
 /**
  * Lists all recipes from the API
  */
-export const listAllRecipes = async (): Promise<Recipe[]> => {
-  const response = await fetch(`${API_URL}/recipe`);
-  const data = await response.json();
-
-  return data.map(deserializeRecipe) as Recipe[];
-};
+export const listAllRecipes = () =>
+  fetch<any>(`${API_URL}/recipe`).map(
+    (response) => response.map(deserializeRecipe) as Recipe[],
+  );
 
 /**
  * Creates a new recipe using the API
  */
-export const createNewRecipe = async (
-  recipe: CreateRecipeDto,
-): Promise<Recipe> => {
-  const serializedRecipe = serializeRecipe(recipe);
+export const createNewRecipe = (recipe: CreateRecipeDto) =>
+  EitherAsync<RequestError, Recipe>(async ({ fromPromise }) => {
+    const serializedRecipe = serializeRecipe(recipe);
 
-  const response = await fetch(`${API_URL}/recipe`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(serializedRecipe),
+    const response = await fromPromise(
+      fetch<any>(`${API_URL}/recipe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(serializedRecipe),
+      }).run(),
+    );
+
+    return deserializeRecipe(response) as Recipe;
   });
-  const data = await response.json();
-
-  return deserializeRecipe(data) as Recipe;
-};
 
 const serializeRecipe = (recipe: CreateRecipeDto) => ({
   ...recipe,
