@@ -5,6 +5,7 @@ export const knownUnits = [
   'rkl',
   'tlk',
   'pkt',
+  'kpl',
   'kg',
   'tl',
   'ml',
@@ -34,7 +35,7 @@ export interface ParseResult {
 
 type LineTransform = (line: string) => string;
 
-const qtyRegExp = '\\d+(?:\\.\\d+)?(?:\\-\\d+(?:\\.\\d+)?)?';
+const qtyRegExp = '\\d+(?:[\\.,]\\d+)?(?:\\-\\d+(?:[\\.,]\\d+)?)?';
 const unitRegExp = `(?:${knownUnits.join('|')})`;
 
 /**
@@ -57,7 +58,11 @@ const compose = (...transforms: LineTransform[]) => (str: string) =>
 const removePossibleListMarkup = (str: string) => str.replace(/^\s*-\s*/, '');
 
 const convertDecimals = (str: string) =>
-  str.replace(/½/g, '0.5').replace(/1\/2/g, '0.5').replace(/3\/4/g, '0.75');
+  str
+    .replace(/½/g, '0.5')
+    .replace(/1\/2/g, '0.5')
+    .replace(/3\/4/g, '0.75')
+    .replace(/1\/4/g, '0.25');
 
 const normalizeDashes = (str: string) => str.replace(/–/, '-');
 
@@ -161,6 +166,8 @@ const isUnit = (word: string | undefined) =>
 const not = <T>(fn: any) => (x: T): boolean => !fn(x);
 
 export const parseQty = (qty: string) => {
+  qty = qty.replace(/,/g, '.');
+
   if (qty.includes('-')) {
     const [from, to] = qty.split('-');
     return { from: Number(from), to: Number(to) };

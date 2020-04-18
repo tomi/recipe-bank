@@ -58,6 +58,12 @@ describe('IngredientParser', () => {
       });
     });
 
+    it('parses 1/4 as 0.25', () => {
+      expect(parseIngredients('1/4 tl suolaa')).toEqual({
+        ingredients: [{ quantity: 0.25, unit: 'tl', name: 'suolaa' }],
+      });
+    });
+
     it('parses 3/4 as 0.75', () => {
       expect(parseIngredients('3/4 tl suolaa')).toEqual({
         ingredients: [{ quantity: 0.75, unit: 'tl', name: 'suolaa' }],
@@ -93,6 +99,18 @@ describe('IngredientParser', () => {
     it("does not parse units it doesn't know", () => {
       expect(parseIngredients('1 iso sipuli')).toEqual({
         ingredients: [{ quantity: 1, name: 'iso sipuli' }],
+      });
+    });
+
+    it('parses dot as a separator', () => {
+      expect(parseIngredients('1.5 porkkanaa')).toEqual({
+        ingredients: [{ quantity: 1.5, name: 'porkkanaa' }],
+      });
+    });
+
+    it('parses comma as a separator', () => {
+      expect(parseIngredients('1,5 porkkanaa')).toEqual({
+        ingredients: [{ quantity: 1.5, name: 'porkkanaa' }],
       });
     });
   });
