@@ -59,7 +59,7 @@ export const ParseIngredientsForm: React.FC<ParseIngredientsFormProps> = ({
       <StyledField label="Parse result">
         {parsedIngredients
           ? parsedIngredients.ingredients.map((i) => (
-              <Ingredient key={i.name} ingredient={i} />
+              <Ingredient ingredient={i} />
             ))
           : null}
       </StyledField>
