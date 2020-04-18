@@ -9,9 +9,11 @@ import {
 import { createHook } from 'overmind-react';
 import { namespaced } from 'overmind/config';
 
+import * as errors from './errors';
 import * as recipes from './recipes';
 
 export const config = namespaced({
+  errors,
   recipes,
 });
 

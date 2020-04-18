@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { FORM_ERROR } from 'final-form';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { IconButton, Button } from 'evergreen-ui';
+import { useHistory } from 'react-router-dom';
 
 import {
   CookingDuration,
@@ -54,16 +56,27 @@ type FormValidateResult = {
   [P in keyof FormData]?: string | string[] | undefined;
 };
 
-export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
-  const { actions } = useOvermind();
-  const { navigateToAllRecipes } = useNavigation();
+const initialValues = {
+  duration: CookingDuration.Between15And30,
+  ingredients: [{}, {}, {}, {}, {}],
+};
 
-  const onFinish = async (values: FormData) => {
+export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
+  const { actions, state } = useOvermind();
+  const { navigateToAllRecipes } = useNavigation();
+  const history = useHistory();
+
+  const onSubmit = async (values: FormData) => {
     const dto = formToDto(values);
 
-    await actions.recipes.createNewRecipe(dto);
+    await actions.recipes.createNewRecipe({
+      recipe: dto,
+      history,
+    });
 
-    navigateToAllRecipes();
+    return {
+      [FORM_ERROR]: 'Recipe creation failed',
+    };
   };
 
   const validate = (values: UnvalidatedFormData): FormValidateResult => {
@@ -86,13 +99,10 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
       </AppLayout.Header>
       <AppLayout.Content>
         <Form<UnvalidatedFormData>
-          onSubmit={onFinish as any}
+          onSubmit={onSubmit as any}
           validate={validate}
           mutators={{ ...arrayMutators }}
-          initialValues={{
-            duration: CookingDuration.Between15And30,
-            ingredients: [{}, {}, {}, {}, {}],
-          }}
+          initialValues={initialValues}
         >
           {(props) => (
             <form onSubmit={props.handleSubmit}>
@@ -104,7 +114,12 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
               <IngredientsInput />
               <InstructionsInput />
 
-              <Button type="submit" appearance="primary" iconBefore="add">
+              <Button
+                type="submit"
+                appearance="primary"
+                iconBefore="add"
+                isLoading={state.recipes.isSavingRecipe}
+              >
                 Add
               </Button>
             </form>

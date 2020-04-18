@@ -1,4 +1,5 @@
 import { from } from 'fromfrom';
+import type { History } from 'history';
 
 import { ingredientTypes, recipeCategories, ingredients } from './seeds';
 import {
@@ -73,10 +74,8 @@ export const api = {
     return values ?? [];
   },
 
-  async fetchRecipes() {
-    const recipes = await listAllRecipes();
-
-    return recipes;
+  fetchRecipes() {
+    return listAllRecipes();
   },
 
   async createIngredientType(ingredientType: Omit<IngredientType, 'id'>) {
@@ -93,9 +92,17 @@ export const api = {
     ]);
   },
 
-  async createNewRecipe(recipe: CreateRecipeDto) {
-    const newRecipe = await createNewRecipe(recipe);
+  createNewRecipe(recipe: CreateRecipeDto) {
+    return createNewRecipe(recipe).map((recipe) => recipe.id);
+  },
+};
 
-    return newRecipe.id;
+export const router = {
+  navigateToAllRecipes(history: History) {
+    this.navigateToUrl(history, '/recipes');
+  },
+
+  navigateToUrl(history: History, url: string) {
+    history.push(url);
   },
 };
