@@ -23,12 +23,15 @@ namespace RecipeBankApi.Model
     public long Id { get; set; }
     [Required]
     public string Name { get; set; }
+    [Required]
     public CookingDuration Duration { get; set; }
+    [Required]
     public int NumPortions { get; set; }
     [Required]
     public string Instructions { get; set; }
     public string[] Categories { get; set; }
     public string Tags { get; set; }
+    // public string OriginalUrl { get; set; }
     public ICollection<RecipeIngredient> Ingredients { get; set; }
 
   }
