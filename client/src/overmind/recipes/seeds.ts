@@ -14,6 +14,7 @@ export const ingredientTypes: IngredientType[] = [
 export const recipeCategories: RecipeCategory[] = [
   [0, 'Starter'],
   [2, 'Pizzas'],
+  [4, 'Mains'],
   [5, 'Soups'],
   [6, 'Salads'],
   [7, 'Sides'],
