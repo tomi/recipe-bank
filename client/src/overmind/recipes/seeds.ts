@@ -12,19 +12,19 @@ export const ingredientTypes: IngredientType[] = [
 }));
 
 export const recipeCategories: RecipeCategory[] = [
-  'Starter',
-  'Drinks',
-  'Pizzas',
-  'Snacks',
-  'Mains',
-  'Soups',
-  'Salads',
-  'Sides',
-  'Desserts',
-  'Pastas & Noodles',
-].map((name, idx) => ({
-  id: idx.toString(),
-  name,
+  [0, 'Starter'],
+  [2, 'Pizzas'],
+  [5, 'Soups'],
+  [6, 'Salads'],
+  [7, 'Sides'],
+  [8, 'Desserts'],
+  [9, 'Pastas'],
+  [10, 'Steaks'],
+  [11, 'Oven dishes'],
+  [12, 'Stews'],
+].map(([id, name]) => ({
+  id: id.toString(),
+  name: name.toString(),
 }));
 
 const findType = (name: string) => {
