@@ -26,7 +26,7 @@
     "fp-ts": "^2.5.3",
     "fromfrom": "^1.5.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.3",
+    "lint-staged": "^10.1.7",
     "overmind": "^23.0.1",
     "overmind-react": "^24.0.1",
     "postcss-cli": "^7.1.0",
