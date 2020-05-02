@@ -11,7 +11,7 @@ import {
   Autocomplete,
   FormFieldValidationMessage,
 } from 'evergreen-ui';
-import { Option, some, none, isNone } from 'fp-ts/lib/Option';
+import { Maybe, Just, Nothing } from 'purify-ts/Maybe';
 
 import { formFieldClassName } from './StyledField';
 import './IngredientsInput.css';
@@ -149,9 +149,9 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
 
 export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
   const [isDialogShown, setIsDialogShown] = React.useState(false);
-  const [maybeParseResult, setParseResult] = React.useState<
-    Option<ParseResult>
-  >(none);
+  const [maybeParseResult, setParseResult] = React.useState<Maybe<ParseResult>>(
+    Nothing,
+  );
 
   return (
     <FieldArray name="ingredients">
@@ -198,30 +198,27 @@ export const IngredientsInput: React.FC<IngredientsInputProps> = () => {
             onCloseComplete={() => {
               setIsDialogShown(false);
 
-              if (isNone(maybeParseResult)) {
-                return;
-              }
+              maybeParseResult.ifJust((parseResult) => {
+                // eslint-disable-next-line no-plusplus
+                for (let i = 0; i < parseResult.ingredients.length; i++) {
+                  const result = parseResult.ingredients[i];
+                  const newIngredient = {
+                    qty: result.quantity
+                      ? formatQuantity(result.quantity)
+                      : undefined,
+                    unit: result.unit,
+                    name: result.name,
+                  };
 
-              const parseResult = maybeParseResult.value;
-              // eslint-disable-next-line no-plusplus
-              for (let i = 0; i < parseResult.ingredients.length; i++) {
-                const result = parseResult.ingredients[i];
-                const newIngredient = {
-                  qty: result.quantity
-                    ? formatQuantity(result.quantity)
-                    : undefined,
-                  unit: result.unit,
-                  name: result.name,
-                };
-
-                fields.update(i, newIngredient);
-              }
+                  fields.update(i, newIngredient);
+                }
+              });
             }}
             confirmLabel="Parse"
           >
             <ParseIngredientsForm
               onIngredientsParsed={(maybeResult: ParseResult) => {
-                setParseResult(some(maybeResult));
+                setParseResult(Just(maybeResult));
               }}
             />
           </Dialog>

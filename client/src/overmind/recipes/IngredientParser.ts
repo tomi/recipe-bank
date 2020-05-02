@@ -1,5 +1,5 @@
 import { from, Sequence } from 'fromfrom';
-import { some, none, isSome } from 'fp-ts/lib/Option';
+import { Just, Nothing } from 'purify-ts/Maybe';
 
 export const knownUnits = [
   'rkl',
@@ -102,8 +102,8 @@ const parseSingleLine = (line: string) => {
   const words = splitToWords(line);
 
   const maybeNumeric = trySplitOn(words, isNumeric);
-  if (isSome(maybeNumeric)) {
-    const { before, match, after } = maybeNumeric.value;
+  if (maybeNumeric.isJust()) {
+    const { before, match, after } = maybeNumeric.extract()!;
 
     if (isUnit(after.first())) {
       return parsedIngredient({
@@ -122,20 +122,23 @@ const parseSingleLine = (line: string) => {
   }
 
   const maybeNumericWithUnit = trySplitOn(words, isNumericWithUnit);
-  if (isSome(maybeNumericWithUnit)) {
-    const { before, match, after } = maybeNumericWithUnit.value;
-    const { qty, unit } = parseQtyWithUnit(match);
+  return maybeNumericWithUnit.caseOf({
+    Just: ({ before, match, after }) => {
+      const { qty, unit } = parseQtyWithUnit(match);
 
-    return parsedIngredient({
-      modifier: joinToModifier(before),
-      quantity: parseQty(qty),
-      unit,
-      name: joinToName(after),
-    });
-  }
+      return parsedIngredient({
+        modifier: joinToModifier(before),
+        quantity: parseQty(qty),
+        unit,
+        name: joinToName(after),
+      });
+    },
 
-  return parsedIngredient({
-    name: joinToName(words),
+    Nothing: () => {
+      return parsedIngredient({
+        name: joinToName(words),
+      });
+    },
   });
 };
 
@@ -151,12 +154,12 @@ const trySplitOn = (
   predicateFn: (w: string) => boolean,
 ) =>
   words.some(predicateFn)
-    ? some({
+    ? Just({
         before: words.takeWhile(not(predicateFn)),
         match: words.find(predicateFn)!,
         after: words.skipWhile(not(predicateFn)).skip(1),
       })
-    : none;
+    : Nothing;
 
 const isNumeric = (word: string) => new RegExp(`^${qtyRegExp}$`).test(word);
 const isNumericWithUnit = (word: string) =>
