@@ -28,7 +28,7 @@
     "lint-staged": "^10.2.1",
     "overmind": "^23.0.1",
     "overmind-react": "^24.0.1",
-    "postcss-cli": "^7.1.0",
+    "postcss-cli": "^7.1.1",
     "prettier": "^2.0.5",
     "purify-ts": "^0.15.1",
     "react": "^16.13.1",
