@@ -30,7 +30,7 @@
     "overmind-react": "^24.0.1",
     "postcss-cli": "^7.1.0",
     "prettier": "^2.0.5",
-    "purify-ts": "^0.14.1",
+    "purify-ts": "^0.15.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-final-form": "^6.4.0",
