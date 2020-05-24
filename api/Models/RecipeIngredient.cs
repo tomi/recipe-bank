@@ -6,6 +6,7 @@ namespace RecipeBankApi.Model
   {
     public long Id { get; set; }
     public long RecipeId { get; set; }
+    [Required]
     public int Order { get; set; }
     [Required]
     public string IngredientText { get; set; }
