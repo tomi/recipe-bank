@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Microsoft.EntityFrameworkCore;
 using RecipeBankApi.Data;
 
 namespace RecipeBankApi
@@ -20,12 +21,12 @@ namespace RecipeBankApi
     {
       var host = CreateHostBuilder(args).Build();
 
-      CreateDbIfNotExists(host);
+      MigrateDb(host);
 
       host.Run();
     }
 
-    private static void CreateDbIfNotExists(IHost host)
+    private static void MigrateDb(IHost host)
     {
       using (var scope = host.Services.CreateScope())
       {
@@ -34,7 +35,7 @@ namespace RecipeBankApi
         try
         {
           var context = services.GetRequiredService<RecipeContext>();
-          context.Database.EnsureCreated();
+          context.Database.Migrate();
         }
         catch (Exception ex)
         {
