@@ -31,7 +31,7 @@ namespace RecipeBankApi.Model
     public string Instructions { get; set; }
     public string[] Categories { get; set; }
     public string Tags { get; set; }
-    // public string OriginalUrl { get; set; }
+    public string OriginalUrl { get; set; }
     public ICollection<RecipeIngredient> Ingredients { get; set; }
 
   }

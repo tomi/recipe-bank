@@ -30,6 +30,7 @@ import {
   NumPortionsInput,
   validateNumPortions,
 } from './inputs/NumPortionsInput';
+import { OriginalUrlInput } from './inputs/OriginalUrlInput';
 import { useOvermind } from '../../overmind';
 import { parseQty } from '../../overmind/recipes/IngredientParser';
 import { useNavigation } from '../../navigation';
@@ -43,6 +44,7 @@ export interface RecipeCategoriesSelectProps {
 interface FormData {
   name: string;
   numPortions: string;
+  originalUrl: string;
   duration: CookingDuration;
   categories: RecipeCategoryId[];
   tags: string[];
@@ -108,6 +110,7 @@ export const AddNewRecipeView: React.FC<AddNewRecipeViewProps> = () => {
             <form onSubmit={props.handleSubmit}>
               <NameInput />
               <NumPortionsInput />
+              <OriginalUrlInput />
               <DurationInput />
               <CategoriesInput />
               <TagsInput />

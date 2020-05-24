@@ -28,6 +28,7 @@ namespace RecipeBankApi.Model
     public string Tags { get; set; }
     [Required]
     public string[] Categories { get; set; }
+    public string OriginalUrl { get; set; }
     [Required]
     public CreateRecipeIngredientDto[] Ingredients { get; set; }
   }

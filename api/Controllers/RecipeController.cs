@@ -53,6 +53,7 @@ namespace RecipeBankApi.Controllers
         Duration = toCreate.Duration,
         Instructions = toCreate.Instructions,
         Name = toCreate.Name,
+        OriginalUrl = toCreate.OriginalUrl,
         NumPortions = toCreate.NumPortions,
         Categories = toCreate.Categories,
         Tags = toCreate.Tags,
