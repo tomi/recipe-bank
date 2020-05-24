@@ -7,6 +7,7 @@ import {
   Pane,
   Text,
   Paragraph,
+  Link,
 } from 'evergreen-ui';
 
 import { AppLayout } from '../../app/AppLayout';
@@ -86,6 +87,13 @@ export const SingleRecipeView: React.FC<SingleRecipeViewProps> = () => {
         <Heading size={700} className="pl-4">
           {recipe.name}
         </Heading>
+        {recipe.originalUrl && (
+          <div className="pl-4 pt-2">
+            <Link href={recipe.originalUrl} rel="noopener noreferrer">
+              {recipe.originalUrl}
+            </Link>
+          </div>
+        )}
         <div className="mt-4 flex flex-row">
           <Pane display="flex" flexDirection="column" className="p-4">
             <div className="flex justify-between">

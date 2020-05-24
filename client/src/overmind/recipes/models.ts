@@ -62,6 +62,7 @@ export interface Recipe {
   id: RecipeId;
   name: string;
   duration: CookingDuration;
+  originalUrl?: string;
   numPortions: number;
   instructions: string;
   ingredients: RecipeIngredient[];
@@ -80,6 +81,7 @@ export interface CreateRecipeIngredientDto {
 export interface CreateRecipeDto {
   name: string;
   duration: CookingDuration;
+  originalUrl: string;
   numPortions: number;
   instructions: string;
   ingredients: CreateRecipeIngredientDto[];
