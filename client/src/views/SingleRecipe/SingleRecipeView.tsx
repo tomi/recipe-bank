@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -8,8 +9,11 @@ import {
   Text,
   Paragraph,
   Link,
+  ArrowLeftIcon,
+  ArrowRightIcon,
 } from 'evergreen-ui';
 
+import './SingleRecipeView.css';
 import { AppLayout } from '../../app/AppLayout';
 import { useOvermind, Recipe, RecipeIngredient } from '../../overmind';
 import { NoRecipeFound } from './NoRecipeFound';
@@ -94,41 +98,57 @@ export const SingleRecipeView: React.FC<SingleRecipeViewProps> = () => {
             </Link>
           </div>
         )}
-        <div className="mt-4 flex flex-row">
-          <Pane display="flex" flexDirection="column" className="p-4">
-            <div className="flex justify-between">
-              <div className="flex flex-col">
-                <Heading size={600}>Ingredients</Heading>
-                <Text size={300} className="mt-2">
-                  {recipe.numPortions} portions
-                </Text>
+        <div className="sm:overflow-hidden">
+          <div className="mt-4 flex flex-row recipe-slider">
+            <Pane
+              flexDirection="column"
+              className="recipe-slider-pane"
+              id="ingredients"
+            >
+              <div className="flex justify-between">
+                <div className="flex flex-col">
+                  <Heading size={600}>Ingredients</Heading>
+                  <Text size={300} className="mt-2">
+                    {recipe.numPortions} portions
+                  </Text>
+                </div>
+                {speechAvailable && (
+                  <IconButton
+                    onClick={speakIngredients}
+                    icon={isSpeaking ? 'stop' : 'play'}
+                  />
+                )}
               </div>
-              {speechAvailable && (
-                <IconButton
-                  onClick={speakIngredients}
-                  icon={isSpeaking ? 'stop' : 'play'}
-                />
-              )}
-            </div>
-            <Ingredients recipe={recipe} />
-          </Pane>
-          <Pane className="p-4 flex-1">
-            <div className="flex justify-between">
-              <div>
-                <Heading size={600}>Instructions</Heading>
-                <Text size={300} className="mt-2">
-                  {formatDuration(recipe.duration)}
-                </Text>
+              <Ingredients recipe={recipe} />
+              <div className="sm:hidden mt-8 mr-1 float-right">
+                <a href="#instructions">
+                  <ArrowRightIcon size={20} />
+                </a>
               </div>
-              {speechAvailable && (
-                <IconButton
-                  onClick={speakInstructions}
-                  icon={isSpeaking ? 'stop' : 'play'}
-                />
-              )}
-            </div>
-            <Instructions recipe={recipe} />
-          </Pane>
+            </Pane>
+            <Pane className="recipe-slider-pane sm:flex-1" id="instructions">
+              <div className="flex justify-between">
+                <div>
+                  <Heading size={600}>Instructions</Heading>
+                  <Text size={300} className="mt-2">
+                    {formatDuration(recipe.duration)}
+                  </Text>
+                </div>
+                {speechAvailable && (
+                  <IconButton
+                    onClick={speakInstructions}
+                    icon={isSpeaking ? 'stop' : 'play'}
+                  />
+                )}
+              </div>
+              <Instructions recipe={recipe} />
+              <div className="sm:hidden mt-8 float-left">
+                <a href="#ingredients">
+                  <ArrowLeftIcon size={20} />
+                </a>
+              </div>
+            </Pane>
+          </div>
         </div>
       </AppLayout.Content>
     </AppLayout>

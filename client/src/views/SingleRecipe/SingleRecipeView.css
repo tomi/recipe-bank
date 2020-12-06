@@ -1,0 +1,24 @@
+@media (max-width: 641px) {
+  .recipe-slider {
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .recipe-slider-pane {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 100%;
+    padding: 1rem;
+    transform-origin: center center;
+    transform: scale(1);
+    transition: transform 0.5s;
+    position: relative;
+  }
+}
+
+.recipe-slider-pane {
+  padding: 1rem;
+}
