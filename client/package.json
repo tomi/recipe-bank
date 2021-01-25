@@ -26,7 +26,7 @@
     "fromfrom": "^1.5.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
-    "overmind": "^23.0.1",
+    "overmind": "^27.0.0",
     "overmind-react": "^24.0.1",
     "postcss-cli": "^7.1.1",
     "prettier": "^2.0.5",
