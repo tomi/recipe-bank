@@ -24,7 +24,7 @@
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
     "fromfrom": "^1.5.0",
-    "husky": "^4.2.5",
+    "husky": "^7.0.1",
     "lint-staged": "^10.2.6",
     "overmind": "^23.0.1",
     "overmind-react": "^24.0.1",
