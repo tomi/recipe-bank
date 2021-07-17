@@ -73,7 +73,7 @@ const deserializeQuantity = ({
 }: {
   minQuantity?: number;
   maxQuantity?: number;
-} = {}): { quantity: Quantity } | {} => {
+} = {}): { quantity: Quantity } | Record<string, never> => {
   if (minQuantity && maxQuantity) {
     return {
       quantity: {
