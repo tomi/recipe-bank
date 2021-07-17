@@ -20,7 +20,7 @@ export class RequestError extends Error {
  * @param url
  * @param init
  */
-export const fetch = <TResponse>(url: string, init?: RequestInit) =>
+export const fetch = <TResponse>(url: string, init?: any) =>
   EitherAsync<RequestError, TResponse>(async ({ liftEither }) => {
     const response = await window.fetch(url, init);
 
