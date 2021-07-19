@@ -35,7 +35,19 @@ const Layout: React.FC = ({ children }) => {
   );
 };
 
+const Footer: React.FC = () => {
+  return (
+    <footer className="flex bg-white p-4 mt-8 rounded-lg text-xs">
+      Logo made by{' '}
+      <a href="https://www.flaticon.com/" title="photo3idea_studio">
+        photo3idea_studio
+      </a>
+    </footer>
+  );
+};
+
 export const AppLayout = Object.assign(Layout, {
   Header,
   Content,
+  Footer,
 });

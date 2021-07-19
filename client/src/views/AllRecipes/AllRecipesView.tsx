@@ -36,6 +36,7 @@ export const AllRecipesView: React.FC = () => {
           </div>
         </div>
       </AppLayout.Content>
+      <AppLayout.Footer />
     </AppLayout>
   );
 };
