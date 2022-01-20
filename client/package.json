@@ -23,7 +23,7 @@
     "evergreen-ui": "^4.27.4",
     "final-form": "^4.20.1",
     "final-form-arrays": "^3.0.2",
-    "fromfrom": "^1.5.0",
+    "fromfrom": "^1.7.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
     "overmind": "^23.0.1",
